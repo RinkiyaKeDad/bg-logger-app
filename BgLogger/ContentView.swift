@@ -23,6 +23,37 @@ struct ContentView: View {
         .padding()
     }
     
+    private func sendNameToAPI(name: String) async {
+        guard let url = URL(string: "http://localhost:3000/api/players") else {
+            print("Invalid URL")
+            return
+        }
+        
+        let body: [String: Any] = ["name": name, "is_owner": true]
+        guard let jsonData = try? JSONSerialization.data(withJSONObject: body) else {
+            print("Error encoding JSON")
+            return
+        }
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpBody = jsonData
+        
+        do {
+            let (data, reponse) = try await URLSession.shared.data(for: request)
+            if let httpResponse = reponse as? HTTPURLResponse {
+                print("Status code: \(httpResponse.statusCode)")
+            }
+            if let responseBody = String(data: data, encoding: .utf8) {
+                print("Response: \(responseBody)")
+            }
+        } catch {
+            print("Request failed: \(error)")
+        }
+        
+    }
+    
     private func validate(name: String) -> Bool {
         // Basic validation: ensure the name is not empty or whitespace
         let trimmed = name.trimmingCharacters(in: .whitespacesAndNewlines)
@@ -40,6 +71,9 @@ struct ContentView: View {
             return
         }
         print("Submitted text: \(username)")
+        Task {
+            await sendNameToAPI(name: username)
+        }
     }
 }
 
