@@ -9,18 +9,21 @@ import SwiftUI
 
 struct ContentView: View {
     @State private var username: String = ""
-    
+    @State private var navigateToMenu = false
     
     var body: some View {
-        VStack {
-            Text("Welcome to BGLogger").font(Font.largeTitle)
-            TextField("Enter your name", text: $username)
-                .disableAutocorrection(true)
-                .onSubmit(handleSubmit)
-                .padding()
-            Button("Submit", action: handleSubmit)
-        }
-        .padding()
+            VStack {
+                Text("Welcome to BGLogger").font(Font.largeTitle)
+                TextField("Enter your name", text: $username)
+                    .disableAutocorrection(true)
+                    .onSubmit(handleSubmit)
+                    .padding()
+                Button("Submit", action: handleSubmit)
+            }
+            .padding()
+            .navigationDestination(isPresented: $navigateToMenu) {
+                MenuView()
+            }
     }
     
     private func sendNameToAPI(name: String) async {
@@ -73,10 +76,13 @@ struct ContentView: View {
         print("Submitted text: \(username)")
         Task {
             await sendNameToAPI(name: username)
+            navigateToMenu = true
         }
     }
 }
 
 #Preview {
-    ContentView()
+    NavigationStack{
+        ContentView()
+    }
 }
