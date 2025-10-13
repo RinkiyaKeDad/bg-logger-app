@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Game: Identifiable, Codable{
+struct Game: Identifiable, Codable, Hashable {
     let id: UUID
     let name: String
     let creator_name: String

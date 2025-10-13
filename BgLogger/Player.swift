@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Player: Identifiable, Codable{
+struct Player: Identifiable, Codable, Hashable{
     let id: UUID
     let name: String
     let is_owner: Bool
