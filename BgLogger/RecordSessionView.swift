@@ -9,6 +9,8 @@
 import SwiftUI
 
 struct RecordSessionView: View {
+    @Environment(\.dismiss) var dismiss
+    
     @State private var games: [Game] = []
     @State private var players: [Player] = []
     @State private var selectedGame: Game?
@@ -79,7 +81,9 @@ struct RecordSessionView: View {
             }
         }
         .alert("Play recorded!", isPresented: $showSuccess) {
-            Button("OK", role: .cancel) {}
+            Button("OK", role: .cancel) {
+                dismiss()
+            }
         }
     }
     

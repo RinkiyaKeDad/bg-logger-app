@@ -65,6 +65,13 @@ struct PlayHistoryView: View {
                     RecordSessionView()
                 }
             }
+            .onChange(of: showRecordPlay) { oldValue, newValue in
+                if oldValue == true && newValue == false {
+                    Task {
+                        await loadData()
+                    }
+                }
+            }
             .task {
                 await loadData()
             }
@@ -114,3 +121,4 @@ struct PlayHistoryView: View {
         return names.joined(separator: ",")
     }
 }
+
