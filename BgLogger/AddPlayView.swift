@@ -1,5 +1,5 @@
 //
-//  RecordSessionView.swift
+//  AddPlayView.swift
 //  BgLogger
 //
 //  Created by Arsh Sharma on 03/10/25.
@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-struct RecordSessionView: View {
+struct AddPlayView: View {
     @Environment(\.dismiss) var dismiss
     
     @State private var games: [Game] = []

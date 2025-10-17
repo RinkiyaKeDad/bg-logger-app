@@ -1,5 +1,5 @@
 //
-//  PlayHistoryView.swift
+//  ListPlaysView.swift
 //  BgLogger
 //
 //  Created by Arsh Sharma on 13/10/25.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct PlayHistoryView: View {
+struct ListPlaysView: View {
     
     @State private var plays: [Play] = []
     @State private var games: [Game] = []
@@ -64,7 +64,7 @@ struct PlayHistoryView: View {
             }
             .sheet(isPresented: $showRecordPlay) {
                 NavigationStack {
-                    RecordSessionView()
+                    AddPlayView()
                 }
             }
             .onChange(of: showRecordPlay) { oldValue, newValue in

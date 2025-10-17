@@ -15,8 +15,8 @@ struct MenuView: View {
                 .padding(.bottom, 30)
             
             NavigationLink("➕ Add More Players", destination: AddPlayersView())
-            NavigationLink("🎲 Add New Games", destination: AddGamesView())
-            NavigationLink("📝 Record a Play Session", destination: PlayHistoryView())
+            NavigationLink("🎲 Add New Games", destination: ListGamesView())
+            NavigationLink("📝 Record a Play Session", destination: ListPlaysView())
             NavigationLink("📊 See Stats", destination: StatsView())
         }
         .padding()
