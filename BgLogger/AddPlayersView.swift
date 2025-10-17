@@ -41,7 +41,11 @@ struct AddPlayersView: View {
             }
         }
         .task{
-            await fetchPlayers()
+            do {
+                players = try await APIService.fetchPlayers()
+            } catch {
+                print("Unable to fetch players: \(error)")
+            }
         }
         .alert("Add New Player", isPresented: $showingAddPlayer){
             TextField("Player name", text: $newPlayerName)
@@ -52,18 +56,6 @@ struct AddPlayersView: View {
                     newPlayerName = ""
                 }
             }
-        }
-    }
-    
-    private func fetchPlayers() async {
-        guard let url = URL(string: "http://localhost:3000/api/players") else { return }
-        do {
-            let (data, _) = try await URLSession.shared.data(from: url)
-            let decoder = JSONDecoder()
-            decoder.dateDecodingStrategy = .iso8601
-            players = try decoder.decode(PlayersResponse.self, from: data).players
-        } catch {
-            print("Failed to fetch players: \(error)")
         }
     }
     
@@ -83,7 +75,7 @@ struct AddPlayersView: View {
             if let httpResponse = response as? HTTPURLResponse {
                 print("POST status: \(httpResponse.statusCode)")
             }
-            await fetchPlayers()
+            players = try await APIService.fetchPlayers()
         } catch {
             print("Failed to add player: \(error)")
         }
