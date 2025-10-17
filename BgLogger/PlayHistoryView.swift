@@ -34,7 +34,9 @@ struct PlayHistoryView: View {
                     List {
                         ForEach(groupedPlays.keys.sorted(by: >), id: \.self) { date in
                             Section(header: Text(sectionHeader(for: date))) {
-                                ForEach(groupedPlays[date] ?? []) { play in
+                                ForEach(
+                                    (groupedPlays[date] ?? []).sorted(by: { $0.created_at > $1.created_at }),
+                                ) { play in
                                     VStack(alignment: .leading, spacing: 4) {
                                         Text(gameName(for: play.game_id))
                                             .font(.headline)
